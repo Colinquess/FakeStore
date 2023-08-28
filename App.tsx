@@ -25,6 +25,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import CategoriesMenu from './app/components/categoriesMenu';
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -71,6 +73,7 @@ function App(): JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
+        <CategoriesMenu />
         <Header />
         <View
           style={{
