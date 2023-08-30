@@ -20,8 +20,10 @@ type ItemTitle = {
 
 type MenuItemPropsType = ItemTitle & onCategorySelect;
 
-const MenuItem: React.FC<MenuItemPropsType> = (props: MenuItemPropsType) => {
-  const [image, setImage] = useState();
+const CategorieItem: React.FC<MenuItemPropsType> = (
+  props: MenuItemPropsType,
+) => {
+  const [image, setImage] = useState<string>();
 
   function getImage() {
     fetch(
@@ -67,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MenuItem;
+export default CategorieItem;

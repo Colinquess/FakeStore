@@ -10,7 +10,7 @@ type ItemShelfPropsType = {
 const ItemShelf: React.FC<ItemShelfPropsType> = (props: ItemShelfPropsType) => {
   const [products, setProducts] = useState<ItemProps[]>([]);
 
-  function getProducts(category?: String) {
+  function getProducts(category?: String): void {
     fetch(
       `https://fakestoreapi.com/products${
         category ? `/category/${category}` : ''

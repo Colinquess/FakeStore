@@ -4,7 +4,7 @@ import {SafeAreaView, View} from 'react-native';
 import CategoriesMenu from '../../components/categoriesMenu';
 import ItemShelf from '../../components/itemShelf';
 
-const Shopping = () => {
+const Shopping: React.FC = () => {
   return (
     <SafeAreaView>
       <View>
@@ -14,7 +14,7 @@ const Shopping = () => {
   );
 };
 
-const HeadComponent = (selectionCallback: Function) => {
+const HeadComponent = (selectionCallback: Function): React.JSX.Element => {
   return <CategoriesMenu selectionCallback={selectionCallback} />;
 };
 

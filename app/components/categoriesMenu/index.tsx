@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 
-import MenuItem, {onCategorySelect} from './categorieItem';
+import CategorieItem, {onCategorySelect} from './categorieItem';
 
 const CategoriesMenu: React.FC<onCategorySelect> = (
   param: onCategorySelect,
 ) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<String[]>([]);
 
-  function getCategories() {
+  function getCategories(): void {
     fetch('https://fakestoreapi.com/products/categories')
       .then(resp => resp.json())
       .then(setData);
@@ -21,7 +21,7 @@ const CategoriesMenu: React.FC<onCategorySelect> = (
       horizontal={true}
       data={data}
       renderItem={({item}) => (
-        <MenuItem
+        <CategorieItem
           itemTitle={item}
           selectionCallback={param.selectionCallback}
         />
