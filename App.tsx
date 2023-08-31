@@ -2,8 +2,8 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import Shopping from './app/pages/shopping';
-import Checkout from './app/pages/checkout';
+import Shopping from './app/src/pages/shopping';
+import Checkout from './app/src/pages/checkout';
 
 const Stack = createNativeStackNavigator();
 
