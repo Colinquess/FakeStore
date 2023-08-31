@@ -1,23 +1,29 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, Pressable, Alert} from 'react-native';
+import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
 
 export type ItemProps = {
-  id: Number;
-  title: String;
-  price: Number;
-  category: String;
-  description: String;
-  image: String;
+  id: number;
+  title: string;
+  price: number;
+  category: string;
+  description: string;
+  image: string;
+  qtdInCart?: number;
 };
 
 type ShelfItemPropType = {
   itemProps: ItemProps;
+  changeCartCB: Function;
 };
 
 const ShelfItem: React.FC<ShelfItemPropType> = (props: ShelfItemPropType) => {
   const image: Object = {
     uri: props.itemProps.image,
   };
+
+  function updateCart(value: number) {
+    props.changeCartCB(props.itemProps, value);
+  }
 
   return (
     <View style={styles.container}>
@@ -39,9 +45,14 @@ const ShelfItem: React.FC<ShelfItemPropType> = (props: ShelfItemPropType) => {
               Price: $ {props.itemProps.price.toFixed(2)}
             </Text>
             <Pressable
-              onPress={() => Alert.alert('Untitled')}
+              onPress={() => updateCart(+1)} // +1 just to be clear
               style={styles.button}>
-              <Text style={styles.addCart}>Add to cart</Text>
+              <Text style={styles.addCart}>
+                Add to cart{' '}
+                {props.itemProps.qtdInCart
+                  ? `(${props.itemProps.qtdInCart})`
+                  : ''}
+              </Text>
             </Pressable>
           </View>
         </View>
