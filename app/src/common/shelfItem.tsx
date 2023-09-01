@@ -17,103 +17,100 @@ export type cartItem = {
   qtdInCart: number;
 };
 
+/**
+ * Updates the cart storage with the added item and change value.
+ *
+ * @param {cartItem} addedItem - The item to be added to the cart.
+ * @param {number} change - The change in quantity of the item.
+ * @param {cartItem[]} cart - The current cart items.
+ * @param {Function} setCart - The function to update the cart state.
+ * @return {Promise<void>} A promise that resolves when the cart storage is updated.
+ */
 export function updateCartStorage(
   addedItem: cartItem,
   change: number,
   cart: cartItem[],
   setCart: Function,
 ): Promise<void> {
-  let updatedCart = [...cart]; // Rebuild to avoid JS's memory pointer
-  let cartItemIndex = updatedCart.findIndex(item => item.id === addedItem.id);
+  const updatedCart = [...cart];
+  const cartItemIndex = updatedCart.findIndex(item => item.id === addedItem.id);
 
   if (
     cartItemIndex > -1 &&
-    updatedCart[cartItemIndex].qtdInCart >= 0 // Is optional, so must be defined
+    updatedCart[cartItemIndex].qtdInCart !== undefined
   ) {
-    updatedCart[cartItemIndex].qtdInCart! += change;
+    updatedCart[cartItemIndex].qtdInCart += change;
   } else {
+    addedItem.qtdInCart = change;
     updatedCart.push(addedItem);
-    updatedCart[updatedCart.length - 1].qtdInCart = change; // Allways 1!? tbt
   }
 
-  // Return a promisse to allow it's treatment in case of a faillure
-  return new Promise((Resolve, Reject) => {
-    AsyncStorage.setItem('cart', JSON.stringify(cart))
-      .then(() => {
-        setCart(updatedCart);
-        Resolve();
-      })
-      .catch(Reject);
+  return AsyncStorage.setItem('cart', JSON.stringify(updatedCart)).then(() => {
+    setCart(updatedCart);
   });
 }
 
 type ShelfItemPropType = {
   itemProps: ItemProps;
-  cartItem: cartItem;
+  cartItem: cartItem | undefined;
   changeCartCB: Function;
 };
 
-const ShelfItem: React.FC<ShelfItemPropType> = (props: ShelfItemPropType) => {
-  const image: Object = {
-    uri: props.itemProps.image,
-  };
+const ShelfItem: React.FC<ShelfItemPropType> = ({
+  itemProps,
+  changeCartCB,
+  cartItem,
+}) => {
+  const {image, title, description, price} = itemProps;
 
   function updateCart(value: number) {
-    props.changeCartCB(props.itemProps, value);
+    changeCartCB(itemProps, value);
   }
+
+  const addToCartButton = (
+    <Pressable onPress={() => updateCart(+1)} style={styles.button}>
+      <Text style={styles.addCart}>
+        Add to cart{' '}
+        {cartItem && cartItem.qtdInCart > 0 ? `(${cartItem.qtdInCart})` : ''}
+      </Text>
+    </Pressable>
+  );
+
+  const editCartButtons = (
+    <View style={styles.editContainer}>
+      <Pressable onPress={() => updateCart(+1)} style={styles.editButton}>
+        <Text style={styles.editCart}>+</Text>
+      </Pressable>
+      <Text style={styles.editCart}>{cartItem ? cartItem.qtdInCart : ''}</Text>
+      <Pressable onPress={() => updateCart(-1)} style={styles.editButton}>
+        <Text style={styles.editCart}>-</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => updateCart(-cartItem!.qtdInCart)}
+        style={styles.removeButton}>
+        <Text style={styles.removeFromCart}>Remove All</Text>
+      </Pressable>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titleStyle}>{props.itemProps.title}</Text>
+      <Text style={styles.titleStyle}>{title}</Text>
       <View style={styles.bodyContent}>
         <Image
-          source={image}
+          source={{uri: image}}
           resizeMode="contain"
           style={styles.cardItemImagePlace}
         />
         <View style={styles.cardBody}>
           <View style={styles.group2}>
-            <Text style={styles.subtitleStyle}>
-              {props.itemProps.description}
-            </Text>
+            <Text style={styles.subtitleStyle}>{description}</Text>
           </View>
           <View style={styles.group}>
-            <Text style={styles.price}>
-              Price: $ {props.itemProps.price.toFixed(2)}
-            </Text>
-            {props.cartItem && props.cartItem.qtdInCart === 0 ? (
-              <Pressable
-                onPress={() => updateCart(+1)} // +1 just to be clear
-                style={styles.button}>
-                <Text style={styles.addCart}>
-                  Add to cart{' '}
-                  {props.cartItem && props.cartItem.qtdInCart > 0
-                    ? `(${props.cartItem.qtdInCart})`
-                    : ''}
-                </Text>
-              </Pressable>
-            ) : (
-              <View style={styles.editContainer}>
-                <Pressable
-                  onPress={() => updateCart(+1)}
-                  style={styles.editButton}>
-                  <Text style={styles.editCart}>+</Text>
-                </Pressable>
-                <Text style={styles.editCart}>
-                  {props.cartItem ? props.cartItem.qtdInCart : ''}
-                </Text>
-                <Pressable
-                  onPress={() => updateCart(-1)}
-                  style={styles.editButton}>
-                  <Text style={styles.editCart}>-</Text>
-                </Pressable>
-                <Pressable
-                  onPress={() => updateCart(-props.cartItem.qtdInCart)}
-                  style={styles.removeButton}>
-                  <Text style={styles.removeFromCart}>Remove All</Text>
-                </Pressable>
-              </View>
-            )}
+            <Text style={styles.price}>Price: $ {price.toFixed(2)}</Text>
+            {!cartItem || (cartItem && cartItem.qtdInCart === 0)
+              ? addToCartButton
+              : editCartButtons}
           </View>
         </View>
       </View>

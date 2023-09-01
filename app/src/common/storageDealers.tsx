@@ -4,22 +4,29 @@ export function restoreStorage(
   searchKey: string,
   restorationCallBack: Function,
 ) {
-  return new Promise<void>((Resolve, Reject) => {
-    AsyncStorage.getAllKeys().then(storageKeys => {
-      if (Array.from(storageKeys).includes(searchKey)) {
-        AsyncStorage.getItem(searchKey)
-          .then(cartItemsString => {
-            let cartItems = JSON.parse(cartItemsString!);
+  return new Promise<void>((resolve, reject) => {
+    AsyncStorage.getAllKeys()
+      .then(storageKeys => {
+        if (storageKeys.includes(searchKey)) {
+          AsyncStorage.getItem(searchKey)
+            .then(cartItemsString => {
+              if (cartItemsString === null) {
+                restorationCallBack([]);
+                resolve();
+              } else {
+                const cartItems = JSON.parse(cartItemsString!);
 
-            if (typeof cartItems === 'object') {
-              restorationCallBack(cartItems);
-              Resolve();
-            } else {
-              Reject();
-            }
-          })
-          .catch(Reject /* Just lose it, caller will handle */);
-      }
-    });
+                if (typeof cartItems === 'object') {
+                  restorationCallBack(cartItems);
+                  resolve();
+                } else {
+                  reject();
+                }
+              }
+            })
+            .catch(reject); // Just ignore the error, the caller will handle it
+        }
+      })
+      .catch(reject); // Just ignore the error, the caller will handle it
   });
 }
