@@ -1,14 +1,23 @@
 <a name="readme-top"></a>
 
+[![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+<!-- FakeStore LOGO -->
 <br />
+<div align="center">
+  <a href="https://fakestoreapi.com/">
+    <img src="https://fakestoreapi.com/icons/logo.png" alt="Logo" width="240" height="240">
+  </a>
 
-[![FakeStore][FakeStore]][FakeStore-url]
+  <p align="center">
+    FakeStoreAPI is as free service to use in your project for testing purposes.
+  </p>
+</div>
 
 <!-- PROJECT LOGO -->
 <br />
@@ -65,8 +74,6 @@ For testing, it uses [Jest](https://jestjs.io/)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 * [![React][React.js]][React-url]
 * [![React-Native][React-native]][React-native-url]
@@ -146,7 +153,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_github](https://colinquess.github.io/) - josecolinques@gmail.com
+Your Name - [@josecolinques](https://colinquess.github.io/) - josecolinques@gmail.com
 
 Project Link: [https://github.com/Colinquess/FakeStore](https://github.com/Colinquess/FakeStore)
 
