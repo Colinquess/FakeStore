@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 
-import ShelfItem, {ItemProps} from './shelfItem';
-import {MMKV} from 'react-native-mmkv';
-
-export const storage = new MMKV();
+import ShelfItem, {
+  ItemProps,
+  updateCartStorage,
+  cartItem,
+} from '../../common/shelfItem';
+import {restoreStorage} from '../../common/storageDealers';
 
 type ItemShelfPropsType = {
   ListHeaderComponent: Function;
@@ -12,50 +14,43 @@ type ItemShelfPropsType = {
 
 const ItemShelf: React.FC<ItemShelfPropsType> = (props: ItemShelfPropsType) => {
   const [products, setProducts] = useState<ItemProps[]>([]);
-  const [cart, setCart] = useState<ItemProps[]>([]);
+  const [cart, setCart] = useState<cartItem[]>([]);
 
-  if (storage.contains('cart')) {
-    setCart(JSON.parse(storage.getString('cart')!));
+  function getProducts(category?: String) {
+    return new Promise<void>((Resolve, Reject) => {
+      fetch(
+        `https://fakestoreapi.com/products${
+          category ? `/category/${category}` : ''
+        }`,
+      )
+        .then(resp => resp.json())
+        .then(respJson => {
+          setProducts(respJson);
+          Resolve();
+        })
+        .catch(Reject);
+    });
   }
 
-  function getProducts(category?: String): void {
-    fetch(
-      `https://fakestoreapi.com/products${
-        category ? `/category/${category}` : ''
-      }`,
-    )
-      .then(resp => resp.json())
-      .then(setProducts);
+  function cartUpdater(item: cartItem, change: number) {
+    updateCartStorage(item, change, cart, setCart);
   }
 
-  function updateCartStorage(cartItem: any, change: number): void {
-    let updatedCart = [...cart]; // Rebuild to avoid JS's memory pointer
-    let cartItemIndex = updatedCart.findIndex(cartItem);
-
-    if (
-      cartItemIndex &&
-      cartItemIndex > 0 &&
-      updatedCart[cartItemIndex].qtdInCart // Is optional, so must be defined
-    ) {
-      updatedCart[cartItemIndex].qtdInCart! += change;
-    } else {
-      updatedCart.push(cartItem);
-      updatedCart[updatedCart.length - 1].qtdInCart = change; // Allways 1!? tbt
-    }
-
-    setCart(updatedCart);
-
-    storage.set('cart', JSON.stringify(cart));
-  }
-
-  useEffect(getProducts, []);
+  useEffect(() => {
+    getProducts();
+    restoreStorage('cart', setCart);
+  }, []);
 
   return (
     <FlatList
       ListHeaderComponent={props.ListHeaderComponent(getProducts)}
       data={products}
       renderItem={({item}) => (
-        <ShelfItem itemProps={item} changeCartCB={updateCartStorage} />
+        <ShelfItem
+          itemProps={item}
+          changeCartCB={cartUpdater}
+          cartItem={cart.find(value => value.id === item.id)!}
+        />
       )}
     />
   );

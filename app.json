@@ -1,4 +1,10 @@
 {
   "name": "main",
-  "displayName": "FakeStore"
+  "displayName": "FakeStore",
+  "android": {
+    "package": "com.anonymous.main"
+  },
+  "ios": {
+    "bundleIdentifier": "com.anonymous.main"
+  }
 }
