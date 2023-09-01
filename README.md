@@ -1,17 +1,20 @@
 <a name="readme-top"></a>
 
-[![FakeStore][FakeStore]][FakeStore-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+<br />
+
+[![FakeStore][FakeStore]][FakeStore-url]
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://img.shields.io/badge/FakeStoreSample-0000FF?style=for-the-badge&logo=FakeStoreSample&logoColor=white" alt="Logo" width="80" height="80">
+  <a href="https://github.com/Colinquess/FakeStore">
+    <img src="https://img.shields.io/badge/FakeStoreSample-0000FF?style=for-the-badge&logo=FakeStoreSample&logoColor=white" alt="Logo" width="434" height="80">
   </a>
 
   <p align="center">
@@ -47,8 +50,6 @@
 [![product-screenshot-1]][product-screenshot-1]
 [![product-screenshot-2]][product-screenshot-2]
 
-This project 
-
 This project was make as a sample to showcase my React Native and TypeScript skills.
 
 It uses the [React Native](https://reactnative.dev/) framework with the [Expo](https://expo.dev/) app.
@@ -76,7 +77,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 <!-- Tree Structure -->
 ### Tree Structure
-<and>
+<pre>
 .
 ├── app
 │   ├── src
@@ -115,7 +116,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 ├── rn-cli.config.js
 ├── tsconfig.json
 └── yarn.lock
-</and>
+</pre>
 
 
 <!-- GETTING STARTED -->
@@ -171,15 +172,15 @@ Project Link: [https://github.com/Colinquess/FakeStore](https://github.com/Colin
 [FakeStore-url]: https://fakestoreapi.com/
 
 
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/Colinquess/FakeStore.svg?style=for-the-badge
 [contributors-url]: https://github.com/Colinquess/FakeStore/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/Colinquess/FakeStore.svg?style=for-the-badge
 [forks-url]: https://github.com/Colinquess/FakeStore/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/Colinquess/FakeStore.svg?style=for-the-badge
 [stars-url]: https://github.com/Colinquess/FakeStore/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/Colinquess/FakeStore.svg?style=for-the-badge
 [issues-url]: https://github.com/Colinquess/FakeStore/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/Colinquess/FakeStore.svg?style=for-the-badge
 [license-url]: https://github.com/Colinquess/FakeStore/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/jose-colinques
